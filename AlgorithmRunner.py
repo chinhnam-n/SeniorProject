@@ -17,7 +17,7 @@ pSAT3 = 1030
 pACT3 = 43
 
 # are we still training?
-training = False
+training = True
 
 # reading in .csv with pandas
 data = pd.read_csv("UMDdata.csv")
@@ -47,6 +47,7 @@ test_y = list(test_result)
 n = 3000
 best = 0
 if training:
+    print("Updates with new best accuracy:")
     for _ in range(n):
         x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.1)
 
@@ -58,11 +59,11 @@ if training:
         if acc > best:
             best = acc
             print(best)
-            knnPickle = open('UMDModel.pickel', 'wb')
+            knnPickle = open('UMDModel.pickle', 'wb')
             pickle.dump(model, knnPickle)
 
-# loads 'model' to be pickel file and tests against test data
-model = pickle.load(open("UMDModel.pickel", "rb"))
+# loads 'model' to be pickle file and tests against test data
+model = pickle.load(open("UMDModel.pickle", "rb"))
 print("Saved model against test data = ", model.score(test_x, test_y))
 
 # test model against test data
